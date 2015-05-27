@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FileProxyServer
+namespace FileProxyServer.Network
 {
     public interface ConnectionListener : MessageListener
     {

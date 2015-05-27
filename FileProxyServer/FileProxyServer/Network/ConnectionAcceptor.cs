@@ -6,7 +6,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FileProxyServer
+namespace FileProxyServer.Network
 {
     public class ConnectionAcceptor
     {
@@ -24,6 +24,7 @@ namespace FileProxyServer
             {
                 Socket socket = listener.AcceptSocket();
                 socket.Blocking = false;
+                socket.NoDelay = true;
                 return socket;
             }
             return null;

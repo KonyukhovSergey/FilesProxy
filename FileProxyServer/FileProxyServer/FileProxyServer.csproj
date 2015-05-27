@@ -44,12 +44,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BufferReceiver.cs" />
-    <Compile Include="BufferSender.cs" />
-    <Compile Include="ConnectionAcceptor.cs" />
-    <Compile Include="ConnectionListener.cs" />
-    <Compile Include="ConnectionProvider.cs" />
-    <Compile Include="MessageListener.cs" />
+    <Compile Include="Network\BufferReceiver.cs" />
+    <Compile Include="Network\BufferSender.cs" />
+    <Compile Include="Network\ConnectionAcceptor.cs" />
+    <Compile Include="Network\ConnectionListener.cs" />
+    <Compile Include="Network\ConnectionProvider.cs" />
+    <Compile Include="Network\MessageListener.cs" />
+    <Compile Include="Network\NioNetClient.cs" />
+    <Compile Include="Network\NioNetServer.cs" />
     <Compile Include="ServerForm.cs">
       <SubType>Form</SubType>
     </Compile>
