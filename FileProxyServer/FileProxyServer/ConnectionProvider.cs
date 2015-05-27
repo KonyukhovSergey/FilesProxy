@@ -11,6 +11,7 @@ namespace FileProxyServer
         private Socket socket;
         private Queue<byte[]> sendQueue = new Queue<byte[]>();
         private BufferSender sender = new BufferSender();
+        private BufferReceiver receiver = new BufferReceiver();
 
         public ConnectionProvider(Socket socket)
         {
@@ -24,6 +25,7 @@ namespace FileProxyServer
 
         public void Send(byte[] data)
         {
+            sendQueue.Enqueue(BitConverter.GetBytes(data.Length));
             sendQueue.Enqueue(data);
         }
 
@@ -35,16 +37,21 @@ namespace FileProxyServer
 
         private void send()
         {
-
-
-            while (sender.Send(socket))
+            if (!sender.IsSent)
             {
-            };
+                sender.Send(socket);
+            }
+
+            while (sender.IsSent && sendQueue.Count > 0)
+            {
+                sender.Init(sendQueue.Dequeue());
+                sender.Send(socket);
+            }
         }
 
-        private void recv(MessageListener connection)
+        private void recv(MessageListener messageListener)
         {
-            throw new NotImplementedException();
+            receiver.Receive(socket, this, messageListener);
         }
     }
 }

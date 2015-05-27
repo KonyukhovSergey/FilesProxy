@@ -29,7 +29,7 @@ namespace FileProxyServer
             state = STATE_LENGTH;
         }
 
-        public void Receive(Socket socket, ConnectionProvider connection, MessageListener message)
+        public void Receive(Socket socket, ConnectionProvider connection, MessageListener messageListener)
         {
             while (socket.Available > 0)
             {
@@ -42,6 +42,7 @@ namespace FileProxyServer
                         data = new byte[BitConverter.ToInt32(sizebuf, 0)];
                         position = 0;
                     }
+                    continue;
                 }
                 if (state == STATE_DATA)
                 {
@@ -49,9 +50,10 @@ namespace FileProxyServer
 
                     if (position == data.Length)
                     {
-                        message.OnMessage(connection, data);
+                        messageListener.OnMessage(connection, data);
                         init();
                     }
+                    continue;
                 }
             }
         }

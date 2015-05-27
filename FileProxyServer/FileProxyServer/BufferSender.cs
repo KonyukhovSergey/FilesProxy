@@ -10,20 +10,25 @@ namespace FileProxyServer
     public class BufferSender
     {
         private int position;
-        private byte[] data;
+        private byte[] data = new byte[0];
 
         public void Init(byte[] data)
         {
             position = 0;
-            this.data = new byte[data.Length + 4];
-            System.Array.Copy(BitConverter.GetBytes(data.Length), this.data, 4);
-            Array.Copy(data, 0, this.data, 4, data.Length);
+            this.data = data;
         }
 
-        public bool Send(Socket socket)
+        public bool IsSent
+        {
+            get
+            {
+                return position == data.Length;
+            }
+        }
+
+        public void Send(Socket socket)
         {
             position += socket.Send(data, position, data.Length - position, SocketFlags.None);
-            return position < data.Length;
         }
     }
 }
