@@ -31,14 +31,14 @@
             this.components = new System.ComponentModel.Container();
             this.NetworkTimer = new System.Windows.Forms.Timer(this.components);
             this.groupBoxSettings = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBoxFolder = new System.Windows.Forms.TextBox();
-            this.buttonRootFolder = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
             this.numericUpDownPort = new System.Windows.Forms.NumericUpDown();
+            this.label2 = new System.Windows.Forms.Label();
+            this.buttonRootFolder = new System.Windows.Forms.Button();
+            this.textBoxFolder = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupBoxStatus = new System.Windows.Forms.GroupBox();
             this.buttonStartStop = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
+            this.labelStatus = new System.Windows.Forms.Label();
             this.groupBoxSettings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPort)).BeginInit();
             this.SuspendLayout();
@@ -64,46 +64,6 @@
             this.groupBoxSettings.TabStop = false;
             this.groupBoxSettings.Text = "Settings";
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 19);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(69, 15);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Root folder:";
-            // 
-            // textBoxFolder
-            // 
-            this.textBoxFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxFolder.Location = new System.Drawing.Point(6, 37);
-            this.textBoxFolder.MaxLength = 1024;
-            this.textBoxFolder.Name = "textBoxFolder";
-            this.textBoxFolder.ReadOnly = true;
-            this.textBoxFolder.Size = new System.Drawing.Size(302, 23);
-            this.textBoxFolder.TabIndex = 1;
-            // 
-            // buttonRootFolder
-            // 
-            this.buttonRootFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonRootFolder.Location = new System.Drawing.Point(314, 37);
-            this.buttonRootFolder.Name = "buttonRootFolder";
-            this.buttonRootFolder.Size = new System.Drawing.Size(36, 23);
-            this.buttonRootFolder.TabIndex = 2;
-            this.buttonRootFolder.Text = "...";
-            this.buttonRootFolder.UseVisualStyleBackColor = true;
-            // 
-            // label2
-            // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(356, 19);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(32, 15);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Port:";
-            // 
             // numericUpDownPort
             // 
             this.numericUpDownPort.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -122,6 +82,48 @@
             0,
             0,
             0});
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(356, 19);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(32, 15);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Port:";
+            // 
+            // buttonRootFolder
+            // 
+            this.buttonRootFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonRootFolder.Location = new System.Drawing.Point(314, 37);
+            this.buttonRootFolder.Name = "buttonRootFolder";
+            this.buttonRootFolder.Size = new System.Drawing.Size(36, 23);
+            this.buttonRootFolder.TabIndex = 2;
+            this.buttonRootFolder.Text = "...";
+            this.buttonRootFolder.UseVisualStyleBackColor = true;
+            this.buttonRootFolder.Click += new System.EventHandler(this.buttonRootFolder_Click);
+            // 
+            // textBoxFolder
+            // 
+            this.textBoxFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxFolder.Location = new System.Drawing.Point(6, 37);
+            this.textBoxFolder.MaxLength = 1024;
+            this.textBoxFolder.Name = "textBoxFolder";
+            this.textBoxFolder.ReadOnly = true;
+            this.textBoxFolder.Size = new System.Drawing.Size(302, 23);
+            this.textBoxFolder.TabIndex = 1;
+            this.textBoxFolder.Text = ".";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 19);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(69, 15);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Root folder:";
             // 
             // groupBoxStatus
             // 
@@ -144,23 +146,24 @@
             this.buttonStartStop.TabIndex = 3;
             this.buttonStartStop.Text = "Start";
             this.buttonStartStop.UseVisualStyleBackColor = true;
+            this.buttonStartStop.Click += new System.EventHandler(this.buttonStartStop_Click);
             // 
-            // label3
+            // labelStatus
             // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.Location = new System.Drawing.Point(446, 12);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(71, 25);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "STOPPED";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelStatus.Location = new System.Drawing.Point(446, 12);
+            this.labelStatus.Name = "labelStatus";
+            this.labelStatus.Size = new System.Drawing.Size(71, 25);
+            this.labelStatus.TabIndex = 4;
+            this.labelStatus.Text = "Stopped";
+            this.labelStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ServerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(529, 344);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.labelStatus);
             this.Controls.Add(this.buttonStartStop);
             this.Controls.Add(this.groupBoxStatus);
             this.Controls.Add(this.groupBoxSettings);
@@ -186,7 +189,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox groupBoxStatus;
         private System.Windows.Forms.Button buttonStartStop;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label labelStatus;
     }
 }
 

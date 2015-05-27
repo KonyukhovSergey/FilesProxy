@@ -32,7 +32,7 @@ namespace FileProxyServer.Network
 
                 if (socketChannel != null)
                 {
-                    ConnectionProvider client = new ConnectionProvider(socketChannel);
+                    ConnectionProvider client = new ConnectionProvider(socketChannel, connectionListener);
                     connectionListener.OnConnect(client);
                     connections.Add(client);
                 }
@@ -48,7 +48,7 @@ namespace FileProxyServer.Network
 
                 try
                 {
-                    client.Tick(connectionListener);
+                    client.Tick();
                     i++;
                 }
                 catch

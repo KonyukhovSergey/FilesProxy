@@ -13,14 +13,22 @@ namespace FileProxyServer.Network
         private BufferSender sender = new BufferSender();
         private BufferReceiver receiver = new BufferReceiver();
 
-        public ConnectionProvider(Socket socket)
+        public MessageListener MessageListener;
+
+        public ConnectionProvider(Socket socket, MessageListener messageListener)
         {
             this.socket = socket;
+            this.MessageListener = messageListener;
         }
 
         public void Close()
         {
             socket.Close();
+        }
+
+        public void Send(string data)
+        {
+            Send(Encoding.UTF8.GetBytes(data));
         }
 
         public void Send(byte[] data)
@@ -32,9 +40,9 @@ namespace FileProxyServer.Network
             }
         }
 
-        public void Tick(MessageListener connection)
+        public void Tick()
         {
-            recv(connection);
+            recv(MessageListener);
             send();
         }
 

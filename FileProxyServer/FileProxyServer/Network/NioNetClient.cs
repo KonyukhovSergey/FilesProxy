@@ -54,7 +54,7 @@ namespace FileProxyServer.Network
                     {
                         if (socket.Connected)
                         {
-                            connectionProvider = new ConnectionProvider(socket);
+                            connectionProvider = new ConnectionProvider(socket, connectionListener);
                             state = STATE_CONNECTED;
                             connectionListener.OnConnect(connectionProvider);
                         }
@@ -69,7 +69,7 @@ namespace FileProxyServer.Network
                 case STATE_CONNECTED:
                     try
                     {
-                        connectionProvider.Tick(connectionListener);
+                        connectionProvider.Tick();
                     }
                     catch
                     {
