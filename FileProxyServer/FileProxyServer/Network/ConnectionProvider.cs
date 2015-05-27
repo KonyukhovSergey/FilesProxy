@@ -25,8 +25,11 @@ namespace FileProxyServer.Network
 
         public void Send(byte[] data)
         {
-            sendQueue.Enqueue(BitConverter.GetBytes(data.Length));
-            sendQueue.Enqueue(data);
+            if (data.Length > 0)
+            {
+                sendQueue.Enqueue(BitConverter.GetBytes(data.Length));
+                sendQueue.Enqueue(data);
+            }
         }
 
         public void Tick(MessageListener connection)

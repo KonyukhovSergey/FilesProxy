@@ -14,8 +14,6 @@ namespace FileProxyServer
 {
     public partial class ServerForm : Form
     {
-        
-
         public ServerForm()
         {
             InitializeComponent();
@@ -27,7 +25,5 @@ namespace FileProxyServer
 
 
         }
-
-
     }
 }
