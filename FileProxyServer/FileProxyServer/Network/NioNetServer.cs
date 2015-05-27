@@ -37,7 +37,7 @@ namespace FileProxyServer.Network
                     connections.Add(client);
                 }
             }
-            catch (Exception e)
+            catch
             {
                 // TODO: it is need the decision to be or not to be
             }
@@ -51,7 +51,7 @@ namespace FileProxyServer.Network
                     client.Tick(connectionListener);
                     i++;
                 }
-                catch (Exception e)
+                catch
                 {
                     connections.RemoveAt(i);
                     connectionListener.OnDisconnect(client);

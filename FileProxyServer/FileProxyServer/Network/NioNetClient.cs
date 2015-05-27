@@ -37,13 +37,12 @@ namespace FileProxyServer.Network
                     try
                     {
                         socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
-                        //socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive, true);
                         socket.Connect(host, port);
                         socket.NoDelay = true;
                         socket.Blocking = false;
                         state = STATE_CONNECTING;
                     }
-                    catch (Exception e)
+                    catch
                     {
                         state = STATE_DISCONNECTED;
                         connectionListener.OnDisconnect(null);
@@ -60,7 +59,7 @@ namespace FileProxyServer.Network
                             connectionListener.OnConnect(connectionProvider);
                         }
                     }
-                    catch (Exception e)
+                    catch
                     {
                         state = STATE_DISCONNECTED;
                         connectionListener.OnDisconnect(null);
@@ -72,7 +71,7 @@ namespace FileProxyServer.Network
                     {
                         connectionProvider.Tick(connectionListener);
                     }
-                    catch (Exception e)
+                    catch
                     {
                         state = STATE_DISCONNECTED;
                         connectionListener.OnDisconnect(connectionProvider);
@@ -90,7 +89,7 @@ namespace FileProxyServer.Network
             {
                 socket.Close();
             }
-            catch (Exception e)
+            catch
             {
             }
         }
