@@ -25,6 +25,7 @@ namespace FileProxyServer.Network
                 Socket socket = listener.AcceptSocket();
                 socket.Blocking = false;
                 socket.NoDelay = true;
+                //socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive, true);
                 return socket;
             }
             return null;

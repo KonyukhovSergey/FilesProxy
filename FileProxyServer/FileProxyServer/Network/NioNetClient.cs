@@ -29,7 +29,7 @@ namespace FileProxyServer.Network
             this.port = port;
         }
 
-        public void tick()
+        public void Tick()
         {
             switch (state)
             {
@@ -37,10 +37,10 @@ namespace FileProxyServer.Network
                     try
                     {
                         socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
+                        //socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive, true);
+                        socket.Connect(host, port);
                         socket.NoDelay = true;
                         socket.Blocking = false;
-                        socket.SetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.KeepAlive, true);
-                        socket.Connect(host, port);
                         state = STATE_CONNECTING;
                     }
                     catch (Exception e)

@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileProxyServer", "FileProxyServer\FileProxyServer.csproj", "{EC3F38CE-6A82-4EFA-A4E9-68E1441DAF19}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkUnitTests", "NetworkUnitTests\NetworkUnitTests.csproj", "{C6C551D4-5DA6-4A19-9DE2-84AF7BB80E99}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{EC3F38CE-6A82-4EFA-A4E9-68E1441DAF19}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC3F38CE-6A82-4EFA-A4E9-68E1441DAF19}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC3F38CE-6A82-4EFA-A4E9-68E1441DAF19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6C551D4-5DA6-4A19-9DE2-84AF7BB80E99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6C551D4-5DA6-4A19-9DE2-84AF7BB80E99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6C551D4-5DA6-4A19-9DE2-84AF7BB80E99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6C551D4-5DA6-4A19-9DE2-84AF7BB80E99}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
