@@ -19,8 +19,9 @@ namespace FileProxyServer
     {
         private NioNetServer server;
         private Tools.IniFile ini = new Tools.IniFile();
+
         private IList<FileClient> clients = new List<FileClient>();
-        private IDictionary<string, DateTime> files = new Dictionary<string, DateTime>();
+
         private FileSystemWatcher watcher;
         private FileSystemEventHandler watcherHandler;
 
@@ -58,12 +59,12 @@ namespace FileProxyServer
 
         public void OnConnect(ConnectionProvider connection)
         {
-            FileClient client = new FileClient(connection, textBoxFolder.Text, files);
+            clients.Add(new FileClient(connection, textBoxFolder.Text));
         }
 
         public void OnDisconnect(ConnectionProvider connection)
         {
-            throw new NotImplementedException();
+            clients.Remove((FileClient)connection.MessageListener);
         }
 
         public void OnMessage(ConnectionProvider connection, byte[] data)
@@ -87,10 +88,9 @@ namespace FileProxyServer
 
                 watcher = new FileSystemWatcher(textBoxFolder.Text + "\\");
                 watcher.InternalBufferSize = 32768;
-                //watcher.NotifyFilter = NotifyFilters.LastWrite|NotifyFilters.LastAccess;
+                watcher.NotifyFilter = NotifyFilters.LastWrite;
                 watcherHandler = new FileSystemEventHandler(watcher_Changed);
                 watcher.Changed += watcherHandler;
-                watcher.Deleted += watcherHandler;
                 watcher.EnableRaisingEvents = true;
             }
             else
@@ -103,15 +103,17 @@ namespace FileProxyServer
 
                 watcher.EnableRaisingEvents = false;
                 watcher.Changed -= watcherHandler;
-                watcher.Deleted -= watcherHandler;
-
                 watcher.Dispose();
             }
         }
 
         private void watcher_Changed(object sender, FileSystemEventArgs e)
         {
-            Debug.WriteLine(e.ChangeType.ToString() + " " + e.Name + " ");
+            //Debug.WriteLine(e.ChangeType.ToString() + " " + e.Name + " ");
+            foreach (var client in clients)
+            {
+                client.Send(e.Name);
+            }
         }
 
         private void buttonRootFolder_Click(object sender, EventArgs e)
@@ -120,7 +122,7 @@ namespace FileProxyServer
             folderBrowseDialog.SelectedPath = textBoxFolder.Text;
             if (folderBrowseDialog.ShowDialog() == DialogResult.OK)
             {
-                textBoxFolder.Text = folderBrowseDialog.SelectedPath;
+                textBoxFolder.Text = folderBrowseDialog.SelectedPath.ToLower();
             }
         }
     }

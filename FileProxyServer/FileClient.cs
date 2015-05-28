@@ -1,6 +1,7 @@
 ﻿using FileProxyServer.Network;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -13,14 +14,13 @@ namespace FileProxyServer
         private ConnectionProvider connection;
         private string folder;
         private string name;
-        private IDictionary<string, DateTime> files;
+        private IDictionary<string, DateTime> files = new Dictionary<string, DateTime>();
 
-        public FileClient(ConnectionProvider connection, string folder, IDictionary<string, DateTime> files)
+        public FileClient(ConnectionProvider connection, string folder)
         {
             this.connection = connection;
             connection.MessageListener = this;
             this.folder = folder;
-            this.files = files;
         }
 
         public void OnMessage(ConnectionProvider connection, byte[] data)
@@ -28,12 +28,6 @@ namespace FileProxyServer
             if (name == null)
             {
                 name = Encoding.UTF8.GetString(data);
-                if (name.StartsWith("delete "))
-                {
-                    name = name.Substring(7);
-                    File.Delete(Path.Combine(folder, name));
-                    name = null;
-                }
             }
             else
             {
@@ -44,15 +38,28 @@ namespace FileProxyServer
             }
         }
 
-        public void Send(string name, byte[] data)
+        public void Send(string name)
         {
+            string path = Path.Combine(folder, name);
+            DateTime lastWriteTime = File.GetLastWriteTime(path);
+
+            if (files[name] != lastWriteTime)
+            {
+                files[name] = lastWriteTime;
+                SendFileData(name, File.ReadAllBytes(path));
+            }
+        }
+
+        private void SendFileData(string name, byte[] data)
+        {
+            Debug.WriteLine("sending: " + name);
             connection.Send(name);
             connection.Send(data);
         }
 
-        public void Delete(string name)
+        public void OnDisconnect(ConnectionProvider connection)
         {
-            connection.Send("delete " + name);
+            throw new NotImplementedException();
         }
     }
 }

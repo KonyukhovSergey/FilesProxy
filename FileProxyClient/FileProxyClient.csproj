@@ -4,8 +4,8 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9BEADE5E-E41E-4A10-924C-DCA0146CC5BD}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <ProjectGuid>{73865B71-F358-4B98-A756-485FC2E6B6C0}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FileProxyClient</RootNamespace>
     <AssemblyName>FileProxyClient</AssemblyName>
@@ -38,62 +38,11 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\FileProxyServer\Network\BufferReceiver.cs">
-      <Link>Network\BufferReceiver.cs</Link>
-    </Compile>
-    <Compile Include="..\FileProxyServer\Network\BufferSender.cs">
-      <Link>Network\BufferSender.cs</Link>
-    </Compile>
-    <Compile Include="..\FileProxyServer\Network\ConnectionAcceptor.cs">
-      <Link>Network\ConnectionAcceptor.cs</Link>
-    </Compile>
-    <Compile Include="..\FileProxyServer\Network\ConnectionListener.cs">
-      <Link>Network\ConnectionListener.cs</Link>
-    </Compile>
-    <Compile Include="..\FileProxyServer\Network\ConnectionProvider.cs">
-      <Link>Network\ConnectionProvider.cs</Link>
-    </Compile>
-    <Compile Include="..\FileProxyServer\Network\MessageListener.cs">
-      <Link>Network\MessageListener.cs</Link>
-    </Compile>
-    <Compile Include="..\FileProxyServer\Network\NioNetClient.cs">
-      <Link>Network\NioNetClient.cs</Link>
-    </Compile>
-    <Compile Include="..\FileProxyServer\Network\NioNetServer.cs">
-      <Link>Network\NioNetServer.cs</Link>
-    </Compile>
-    <Compile Include="Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
