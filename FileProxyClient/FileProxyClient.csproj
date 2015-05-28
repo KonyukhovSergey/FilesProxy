@@ -41,6 +41,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\FileProxyServer\FileClient.cs">
+      <Link>FileClient.cs</Link>
+    </Compile>
+    <Compile Include="..\FileProxyServer\Network\BufferReceiver.cs">
+      <Link>Network\BufferReceiver.cs</Link>
+    </Compile>
+    <Compile Include="..\FileProxyServer\Network\BufferSender.cs">
+      <Link>Network\BufferSender.cs</Link>
+    </Compile>
+    <Compile Include="..\FileProxyServer\Network\ConnectionAcceptor.cs">
+      <Link>Network\ConnectionAcceptor.cs</Link>
+    </Compile>
+    <Compile Include="..\FileProxyServer\Network\ConnectionListener.cs">
+      <Link>Network\ConnectionListener.cs</Link>
+    </Compile>
+    <Compile Include="..\FileProxyServer\Network\ConnectionProvider.cs">
+      <Link>Network\ConnectionProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\FileProxyServer\Network\MessageListener.cs">
+      <Link>Network\MessageListener.cs</Link>
+    </Compile>
+    <Compile Include="..\FileProxyServer\Network\NioNetClient.cs">
+      <Link>Network\NioNetClient.cs</Link>
+    </Compile>
+    <Compile Include="..\FileProxyServer\Network\NioNetServer.cs">
+      <Link>Network\NioNetServer.cs</Link>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

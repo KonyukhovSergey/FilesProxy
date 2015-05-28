@@ -29,7 +29,7 @@ namespace FileProxyServer.Network
             this.port = port;
         }
 
-        public void Tick()
+        public bool Tick()
         {
             switch (state)
             {
@@ -79,11 +79,12 @@ namespace FileProxyServer.Network
                     break;
 
                 case STATE_DISCONNECTED:
-                    break;
+                    return false;
             }
+            return true;
         }
 
-        public void close()
+        public void Close()
         {
             try
             {

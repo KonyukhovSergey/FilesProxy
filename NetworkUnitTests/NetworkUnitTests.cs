@@ -34,7 +34,7 @@ namespace NetworkUnitTests
             Assert.AreEqual(1, serverConnectionListener.OnConnectCount);
             Assert.AreEqual(1, clientConnectionListener.OnConnectCount);
 
-            client.close();
+            client.Close();
             server.Stop();
         }
 
@@ -76,7 +76,7 @@ namespace NetworkUnitTests
             Assert.AreEqual(1, clientConnectionListener.OnMessageCount);
             Assert.AreEqual(message, Encoding.Default.GetString(clientConnectionListener.messages.Dequeue()));
 
-            client.close();
+            client.Close();
             server.Stop();
         }
     }

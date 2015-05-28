@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace FileProxyServer
@@ -43,11 +44,41 @@ namespace FileProxyServer
             string path = Path.Combine(folder, name);
             DateTime lastWriteTime = File.GetLastWriteTime(path);
 
-            if (files[name] != lastWriteTime)
+            if (!files.ContainsKey(name) || files[name] != lastWriteTime)
             {
-                files[name] = lastWriteTime;
-                SendFileData(name, File.ReadAllBytes(path));
+                byte[] data = TryToLoadBytes(name);
+
+                if (data != null)
+                {
+                    files[name] = lastWriteTime;
+                    SendFileData(name, data);
+                }
+                else
+                {
+                    Debug.WriteLine("error reading: " + name);
+                }
             }
+        }
+
+        private byte[] TryToLoadBytes(string name, int tryCount = 5, int tryDelay = 50)
+        {
+            byte[] data = null;
+
+            do
+            {
+                try
+                {
+                    Thread.Sleep(tryDelay);
+                    data = File.ReadAllBytes(Path.Combine(folder, name));
+                }
+                catch
+                {
+                }
+                tryCount--;
+            }
+            while (data == null && tryCount >= 0);
+
+            return data;
         }
 
         private void SendFileData(string name, byte[] data)
