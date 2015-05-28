@@ -29,33 +29,40 @@ namespace FileProxyClient
         private string folder;
         private FileClient fileClient;
 
-        private FileSystemWatcher fsw;
+        private FileSystemWatcher fileSystemWatcher;
+        private IDictionary<string, DateTime> filesWriteTime = new Dictionary<string, DateTime>();
 
-        public Client(string host,int port,string folder)
+        public Client(string host, int port, string folder)
         {
             client = new NioNetClient(host, port, this);
             this.folder = folder;
-            fsw = new FileSystemWatcher(folder + "\\");
-            fsw.InternalBufferSize = 32768;
-            fsw.NotifyFilter = NotifyFilters.LastWrite;
-            fsw.Changed += fsw_Changed;
+            fileSystemWatcher = new FileSystemWatcher(folder + "\\");
+            fileSystemWatcher.InternalBufferSize = 32768;
+            fileSystemWatcher.NotifyFilter = NotifyFilters.LastWrite;
+            fileSystemWatcher.Changed += fileSystemWatcher_Changed;
         }
 
-        void fsw_Changed(object sender, FileSystemEventArgs e)
+        void fileSystemWatcher_Changed(object sender, FileSystemEventArgs e)
         {
-            fileClient.Send(e.Name);
+            DateTime writeTime = File.GetLastWriteTime(e.FullPath);
+
+            if (!filesWriteTime.ContainsKey(e.Name) || !writeTime.Equals(filesWriteTime[e.Name]))
+            {
+                filesWriteTime[e.Name] = writeTime;
+                fileClient.Send(e.Name);
+            }
         }
 
         public void OnConnect(ConnectionProvider connection)
         {
             fileClient = new FileClient(connection, folder);
-            fsw.EnableRaisingEvents = true;
+            fileSystemWatcher.EnableRaisingEvents = true;
 
         }
 
         public void OnDisconnect(ConnectionProvider connection)
         {
-            fsw.EnableRaisingEvents = false;
+            fileSystemWatcher.EnableRaisingEvents = false;
             client.Close();
         }
 

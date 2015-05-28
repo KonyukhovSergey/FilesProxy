@@ -24,6 +24,7 @@ namespace FileProxyServer
 
         private FileSystemWatcher watcher;
         private FileSystemEventHandler watcherHandler;
+        private IDictionary<string, DateTime> filesWriteTime = new Dictionary<string, DateTime>();
 
         public ServerForm()
         {
@@ -59,11 +60,13 @@ namespace FileProxyServer
 
         public void OnConnect(ConnectionProvider connection)
         {
+            Console.WriteLine("connected");
             clients.Add(new FileClient(connection, textBoxFolder.Text));
         }
 
         public void OnDisconnect(ConnectionProvider connection)
         {
+            Console.WriteLine("disconnected");
             clients.Remove((FileClient)connection.MessageListener);
         }
 
@@ -91,6 +94,7 @@ namespace FileProxyServer
                 watcher.NotifyFilter = NotifyFilters.LastWrite;
                 watcherHandler = new FileSystemEventHandler(watcher_Changed);
                 watcher.Changed += watcherHandler;
+                watcher.SynchronizingObject = this;
                 watcher.EnableRaisingEvents = true;
             }
             else
@@ -109,10 +113,16 @@ namespace FileProxyServer
 
         private void watcher_Changed(object sender, FileSystemEventArgs e)
         {
-            //Debug.WriteLine(e.ChangeType.ToString() + " " + e.Name + " ");
-            foreach (var client in clients)
+            DateTime writeTime = File.GetLastWriteTime(e.FullPath);
+
+            if (!filesWriteTime.ContainsKey(e.Name) || !writeTime.Equals(filesWriteTime[e.Name]))
             {
-                client.Send(e.Name);
+                filesWriteTime[e.Name] = writeTime;
+                Console.WriteLine(e.ChangeType.ToString() + " " + e.Name + " ");
+                foreach (var client in clients)
+                {
+                    client.Send(e.Name);
+                }
             }
         }
 

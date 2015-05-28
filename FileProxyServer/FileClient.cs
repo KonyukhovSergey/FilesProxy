@@ -29,6 +29,7 @@ namespace FileProxyServer
             if (name == null)
             {
                 name = Encoding.UTF8.GetString(data);
+                Console.WriteLine("onMessage: " + name);
             }
             else
             {
@@ -44,7 +45,7 @@ namespace FileProxyServer
             string path = Path.Combine(folder, name);
             DateTime lastWriteTime = File.GetLastWriteTime(path);
 
-            if (!files.ContainsKey(name) || files[name] != lastWriteTime)
+            if (!files.ContainsKey(name) || !lastWriteTime.Equals(files[name]))
             {
                 byte[] data = TryToLoadBytes(name);
 
@@ -55,7 +56,7 @@ namespace FileProxyServer
                 }
                 else
                 {
-                    Debug.WriteLine("error reading: " + name);
+                    Console.WriteLine("error reading: " + name);
                 }
             }
         }
