@@ -15,7 +15,7 @@ namespace FileProxyServer
         private ConnectionProvider connection;
         private string folder;
         private string name;
-        private IDictionary<string, DateTime> files = new Dictionary<string, DateTime>();
+        private IDictionary<string, long> sendTimes = new Dictionary<string, long>();
 
         public FileClient(ConnectionProvider connection, string folder)
         {
@@ -33,9 +33,8 @@ namespace FileProxyServer
             }
             else
             {
-                string path = Path.Combine(folder, name);
-                File.WriteAllBytes(path, data);
-                files[name] = File.GetLastWriteTime(path);
+                sendTimes[name] = long.MaxValue;
+                File.WriteAllBytes(Path.Combine(folder, name), data);
                 name = null;
             }
         }
@@ -43,15 +42,15 @@ namespace FileProxyServer
         public void Send(string name)
         {
             string path = Path.Combine(folder, name);
-            DateTime lastWriteTime = File.GetLastWriteTime(path);
 
-            if (!files.ContainsKey(name) || !lastWriteTime.Equals(files[name]))
+            long nowTime = DateTime.Now.Ticks;
+
+            if (!sendTimes.ContainsKey(name) || nowTime > sendTimes[name])
             {
                 byte[] data = TryToLoadBytes(name);
 
                 if (data != null)
                 {
-                    files[name] = lastWriteTime;
                     SendFileData(name, data);
                 }
                 else
@@ -59,6 +58,8 @@ namespace FileProxyServer
                     Console.WriteLine("error reading: " + name);
                 }
             }
+
+            sendTimes[name] = nowTime;
         }
 
         private byte[] TryToLoadBytes(string name, int tryCount = 5, int tryDelay = 50)
@@ -69,12 +70,12 @@ namespace FileProxyServer
             {
                 try
                 {
-                    Thread.Sleep(tryDelay);
                     data = File.ReadAllBytes(Path.Combine(folder, name));
                 }
                 catch
                 {
                 }
+                Thread.Sleep(tryDelay);
                 tryCount--;
             }
             while (data == null && tryCount >= 0);
