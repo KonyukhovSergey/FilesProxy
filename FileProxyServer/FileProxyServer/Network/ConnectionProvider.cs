@@ -42,11 +42,11 @@ namespace FileProxyServer.Network
 
         public void Tick()
         {
-            recv(MessageListener);
-            send();
+            Recv();
+            Send();
         }
 
-        private void send()
+        private void Send()
         {
             if (!sender.IsSent)
             {
@@ -60,9 +60,9 @@ namespace FileProxyServer.Network
             }
         }
 
-        private void recv(MessageListener messageListener)
+        private void Recv()
         {
-            receiver.Receive(socket, this, messageListener);
+            receiver.Receive(socket, this, MessageListener);
         }
     }
 }

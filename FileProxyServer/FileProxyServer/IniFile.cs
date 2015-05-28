@@ -9,47 +9,47 @@ using System.Threading.Tasks;
 
 namespace Tools
 {
-    class IniFile   // revision 10
+    public class IniFile   // revision 10
     {
-        string Path;
-        string EXE = Assembly.GetExecutingAssembly().GetName().Name;
+        private string path;
+        private string exe = Assembly.GetExecutingAssembly().GetName().Name;
 
         [DllImport("kernel32")]
-        static extern long WritePrivateProfileString(string Section, string Key, string Value, string FilePath);
+        static extern long WritePrivateProfileString(string section, string key, string value, string filePath);
 
         [DllImport("kernel32")]
-        static extern int GetPrivateProfileString(string Section, string Key, string Default, StringBuilder RetVal, int Size, string FilePath);
+        static extern int GetPrivateProfileString(string section, string key, string defaultValue, StringBuilder returnValue, int size, string filePath);
 
         public IniFile(string IniPath = null)
         {
-            Path = new FileInfo(IniPath ?? EXE + ".ini").FullName.ToString();
+            path = new FileInfo(IniPath ?? exe + ".ini").FullName.ToString();
         }
 
-        public string Read(string Key, string Section = null)
+        public string Read(string key, string section = null)
         {
-            var RetVal = new StringBuilder(255);
-            GetPrivateProfileString(Section ?? EXE, Key, "", RetVal, 255, Path);
-            return RetVal.ToString();
+            var returnValue = new StringBuilder(255);
+            GetPrivateProfileString(section ?? exe, key, "", returnValue, 255, path);
+            return returnValue.ToString();
         }
 
-        public void Write(string Key, string Value, string Section = null)
+        public void Write(string key, string value, string section = null)
         {
-            WritePrivateProfileString(Section ?? EXE, Key, Value, Path);
+            WritePrivateProfileString(section ?? exe, key, value, path);
         }
 
-        public void DeleteKey(string Key, string Section = null)
+        public void DeleteKey(string key, string section = null)
         {
-            Write(Key, null, Section ?? EXE);
+            Write(key, null, section ?? exe);
         }
 
-        public void DeleteSection(string Section = null)
+        public void DeleteSection(string section = null)
         {
-            Write(null, null, Section ?? EXE);
+            Write(null, null, section ?? exe);
         }
 
-        public bool KeyExists(string Key, string Section = null)
+        public bool KeyExists(string key, string section = null)
         {
-            return Read(Key, Section).Length > 0;
+            return Read(key, section).Length > 0;
         }
     }
 }
